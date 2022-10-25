@@ -23,7 +23,7 @@ router
   .put(updatePizza)
   .delete(deletePizza);
 
-  module.exports = router;
+module.exports = router;
 
 
 /*The following variations achieve the same goal:
