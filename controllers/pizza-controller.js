@@ -7,6 +7,23 @@ const pizzaController = {
   //Get all pizzas. We use the Mongoose .find() method, much like the Sequelize .findAll() method.
   getAllPizza(req, res) {
     Pizza.find({})
+    /*In MongoDB we can populate a field like comments. To populate a field, just chain the
+    .populate() method onto your query, passing in an object with the key path plus the
+    value of the field you want populated.*/
+      .populate({
+        path:'comments',
+        select: '-__v'
+      /*We also used the select option inside populate() to tell Moongose that we don't care
+      about the __v field on comments either. The minus sign - in front of the field indicates
+      that we don't want it to be returned. If we didn't have it, it would mean that it would
+      return only the __v field.*/
+      })
+      //update the query to not include the pizza's __v field either.
+      .select('-__v')
+
+      /*Using .sort() method to sort in DESC order by the _id value.*/
+      .sort({ _id: -1 })
+
       .then(dbPizzaData => res.json(dbPizzaData))
       .catch(err => {
         console.log(err);
@@ -17,12 +34,18 @@ const pizzaController = {
   //Get one pizza by id. We use the Mongoose .findOne() method to find a single pizza by its _id
   getPizzaById({ params }, res) {
     Pizza.findOne({ _id: params.id })
+      .populate({
+        path: 'comments',
+        select: '-__v'
+      })
+      .select('-__v')
       .then(dbPizzaData => {
-        //If no pizza is found send 404
+        //If statement to make sure Mongo received the data. If no pizza is found send 404
         if (!dbPizzaData) {
           res.status(404).json({ message: 'No pizza found with this id!' });
           return;
         }
+        //If data is found, we send back res.json with the dbPizzaData.
         res.json(dbPizzaData);
       })
       .catch(err => {
@@ -46,12 +69,14 @@ const pizzaController = {
   document. By setting the parameter to true, we're instructing Mongoose to return the
   new version of the document.*/
   updatePizza({ params, body }, res) {
-    Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
+    //Also can use in place of body the operator {$set: {<field to update>: body.<new value>}}
+    Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })//parameter new when true will make Mongoose return the updated document with changes
       .then(dbPizzaData => {
         if (!dbPizzaData) {
           res.status(404).json({ message: 'No pizza found with this id!' });
           return;
         }
+        //If data is found, we send back res.json with the dbPizzaData. Because we used parameter new: true, this res will have the updated data.
         res.json(dbPizzaData);
       })
       .catch(err => res.status(400).json(err));
@@ -67,12 +92,13 @@ const pizzaController = {
           res.status(404).json({ message: 'No pizza found with this id!' });
           return;
         }
+        //as the pizza was deleted we can send back true as follows:
+        //res.json(true);
         res.json(dbPizzaData);
       })
       .catch(err => res.status(400).json(err));
   }
-
-}
+};
 
 module.exports = pizzaController;
 
