@@ -4,7 +4,7 @@ const dateFormat = require('../utils/dateFormat');
 
 
 //Creating replies as a subdocument array for comments.
-const ReplySchema = new Schema (
+const ReplySchema = new Schema(
   {
     //Set custom id to avoid confusion with parent comment _id
     replyId: {
@@ -13,10 +13,13 @@ const ReplySchema = new Schema (
       default: () => new Types.ObjectId()
     },
     replyBody: {
-      type: String
+      type: String,
+      required: true,
+      trim: true
     },
     writtenBy: {
-      type: String
+      type: String,
+      required: true
     },
     createdAt: {
       type: Date,
@@ -34,10 +37,13 @@ const ReplySchema = new Schema (
 const CommentsSchema = new Schema(
   {
     writtenBy: {
-      type: String
+      type: String,
+      required: true
     },
     commentBody: {
-      type: String
+      type: String,
+      required: true,
+      trim: true
     },
     createdAt: {
       type: Date,
@@ -58,7 +64,7 @@ const CommentsSchema = new Schema(
 );
 
 
-CommentsSchema.virtual('replyCount').get(function() {
+CommentsSchema.virtual('replyCount').get(function () {
   return this.replies.length;
 });
 

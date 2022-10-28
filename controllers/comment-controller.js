@@ -3,7 +3,7 @@ const { Pizza, Comment } = require('../models');
 const commentController = {
   //Add a comment to pizza
   postComment({ params, body }, res) {
-    console.log(body);
+    //console.log(body);
     Comment.create(body)
       .then(({ _id }) => {
         /*We're also returning the pizza Promise here so that we can do something with the results of the Mongoose operation. Again, because we passed the option of new: true, we're receiving back the updated pizza (the pizza with the new comment included).*/
@@ -31,7 +31,7 @@ const commentController = {
     Comment.findOneAndUpdate(
       { _id: params.commentId },
       { $push: { replies: body } },
-      { new: true }
+      { new: true, runValidators: true }
     )
       .then(dbPizzaData => {
         if (!dbPizzaData) {

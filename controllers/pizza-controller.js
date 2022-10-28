@@ -7,16 +7,16 @@ const pizzaController = {
   //Get all pizzas. We use the Mongoose .find() method, much like the Sequelize .findAll() method.
   getAllPizza(req, res) {
     Pizza.find({})
-    /*In MongoDB we can populate a field like comments. To populate a field, just chain the
-    .populate() method onto your query, passing in an object with the key path plus the
-    value of the field you want populated.*/
+      /*In MongoDB we can populate a field like comments. To populate a field, just chain the
+      .populate() method onto your query, passing in an object with the key path plus the
+      value of the field you want populated.*/
       .populate({
-        path:'comments',
+        path: 'comments',
         select: '-__v'
-      /*We also used the select option inside populate() to tell Moongose that we don't care
-      about the __v field on comments either. The minus sign - in front of the field indicates
-      that we don't want it to be returned. If we didn't have it, it would mean that it would
-      return only the __v field.*/
+        /*We also used the select option inside populate() to tell Moongose that we don't care
+        about the __v field on comments either. The minus sign - in front of the field indicates
+        that we don't want it to be returned. If we didn't have it, it would mean that it would
+        return only the __v field.*/
       })
       //update the query to not include the pizza's __v field either.
       .select('-__v')
@@ -70,7 +70,13 @@ const pizzaController = {
   new version of the document.*/
   updatePizza({ params, body }, res) {
     //Also can use in place of body the operator {$set: {<field to update>: body.<new value>}}
-    Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })//parameter new when true will make Mongoose return the updated document with changes
+    Pizza.findOneAndUpdate(
+      { _id: params.id },
+      body,
+      { new: true, runValidators: true }
+    )
+      //parameter new when true will make Mongoose return the updated document with changes
+      //Include runValidators: true setting when updating data so that it knows to validate any new information.
       .then(dbPizzaData => {
         if (!dbPizzaData) {
           res.status(404).json({ message: 'No pizza found with this id!' });
@@ -81,8 +87,8 @@ const pizzaController = {
       })
       .catch(err => res.status(400).json(err));
   },
-/*There are also Mongoose and MongoDB methods called .updateOne(), .updateMany(),
-.deleteOne() or .deleteMany() which update documents without returning them.*/
+  /*There are also Mongoose and MongoDB methods called .updateOne(), .updateMany(),
+  .deleteOne() or .deleteMany() which update documents without returning them.*/
 
   //Delete a pizza using the findOneAndDelete() method.
   deletePizza({ params }, res) {
