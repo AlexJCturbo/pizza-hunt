@@ -6,9 +6,6 @@ const {
   updatePizza,
   deletePizza
 } = require('../../controllers/pizza-controller')
-/*Instead of importing the entire object and having to do
-pizzaController.getAllPizza(), we can simply destructure the method
-names out of the imported object and use those names directly.*/
 
 //Set up GET all and POST endpoints at /api/pizzas
 router
@@ -24,15 +21,3 @@ router
   .delete(deletePizza);
 
 module.exports = router;
-
-
-/*The following variations achieve the same goal:
-
-//this code
-router.route('/').get(getCallbackFunction).post(postCallbackFunction);
-
-//is this same as this
-router.get('/', getCallbackFunction);
-router.post('/', postCallbackFunction);
-
-*/

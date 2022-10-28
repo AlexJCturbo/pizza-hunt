@@ -17,21 +17,16 @@ function getPizza() {
   //Get pizzaInfo
   fetch(`/api/pizzas/${pizzaId}`)
     .then(response => {
-      //Check for a 4xx or 5xx error from server
+      //Check for error from server
       if (!response.ok) {
         throw new Error({ message: 'Something went wrong!' });
       }
-      //console.log(response);
       return response.json();
     })
     .then(printPizza)
-    //Any error takes the user back to the home page using the window.history.back() method.
     .catch(err => {
       console.log(err);
       alert('Cannot find a pizza with this id! Taking you back.');
-      /*The window history API exposes methods that let us control the state of the browser's
-      session. As long as this particular browser session has a previous page, it will behave
-      as if the user had clicked on the "Back" button*/
       window.history.back();
     })
 }

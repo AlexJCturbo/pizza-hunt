@@ -1,14 +1,11 @@
-//Importing Types object
 const { Schema, model, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
-
 
 //Creating replies as a subdocument array for comments.
 const ReplySchema = new Schema(
   {
     //Set custom id to avoid confusion with parent comment _id
     replyId: {
-      //Using Type object
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId()
     },
@@ -51,7 +48,6 @@ const CommentsSchema = new Schema(
       get: createdAtVal => dateFormat(createdAtVal)
     },
     //Replies will be nested directly in a comment's document and not referred to.
-    //Using ReplySchema to validate data for a reply
     replies: [ReplySchema]
   },
   {
