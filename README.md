@@ -15,16 +15,16 @@ Pizza Hunt is a social media application that lets users connect with each other
 
 This project develops the backend part of the application "Pizza Hunt", a web page where users can create pizza recipes, post comments on other users' pizzas and add replies to comments.
 
-The project created the Express.js API routes and connects the back end to the NoSQL-database MongoDB to handle pizzas data and comments. Finally, this porject integrates the API code with the client’s existing frontend codebase.
+The project created the Express.js API routes and connects the back end to the NoSQL-database MongoDB to handle pizzas data and comments. Finally, this project integrates the API code with the client’s existing frontend codebase.
 ###### [Back to Index](#Table-of-Contents)
 
 ## User Story
 
 ```
 As a user:
-I can create and customize my own unique pizza.
+I can create and customize my unique pizza.
 I can retrieve data about my pizzas or other pizzas created through the app.
-I want to be able to leave a comment on a pizza that has been created and reply to other users' comments.
+I want to be able to leave a comment on a pizza that has been created and reply to other user's comments.
 ```
 ###### [Back to Index](#Table-of-Contents)
 
