@@ -45,7 +45,7 @@ I want to be able to leave a comment on a pizza that has been created and reply 
 
 
 ## Questions
-Please, feel free to get in touch with me at any member of the development team to discuss any inquiries or suggestions for the project. We will be happy to connect with you!
+Please, feel free to get in touch to discuss any inquiries or suggestions for the project. We will be happy to connect with you!
 ###### [Back to Index](#Table-of-Contents)
 
 ## Links
